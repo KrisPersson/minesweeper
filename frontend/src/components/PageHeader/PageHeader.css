@@ -1,0 +1,10 @@
+
+.wrapper {
+    grid-column: 1 / -1;
+    color: currentColor;
+    background: var(--c-background-main);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-default);
+}

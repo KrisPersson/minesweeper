@@ -1,0 +1,21 @@
+
+.wrapper {
+    color: currentColor;
+    background: var( --c-background-game-window);
+    display: flex;
+    flex-direction: column;
+
+}
+
+.gamewindow__header {
+    display: flex;
+    justify-content: space-between;
+    min-width: 100%;
+    min-height: 96px;
+    gap: 8px;
+}
+
+.stat_text {
+    color: var(--c-text-darker);
+    font-size: 1.5rem;
+}
