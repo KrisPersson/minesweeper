@@ -1,5 +1,5 @@
 
-.wrapper {
+.page_header {
     grid-column: 1 / -1;
     color: currentColor;
     background: var(--c-background-main);

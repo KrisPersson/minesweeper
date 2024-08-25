@@ -1,6 +1,19 @@
 
-.wrapper {
+.tile {
     background: var(--c-green-500);
     width: 24px;
     height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.tile--dark {
+    background: var(--c-green-600);
+}
+
+.flag {
+    max-width: 16px;
+    max-width: 16px;
 }

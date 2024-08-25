@@ -3,4 +3,6 @@ export type Ttile = {
   y: number;
   content: number;
   revealed: boolean;
+  flagged: boolean;
+  index: number;
 };

@@ -1,5 +1,5 @@
 
-.wrapper {
+.wrapper_window {
     color: currentColor;
     background: var( --c-background-game-window);
     display: flex;
