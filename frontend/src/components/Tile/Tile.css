@@ -7,6 +7,7 @@
     justify-content: center;
     align-items: center;
     cursor: default;
+    font-weight: 700;
 }
 
 .tile--dark {
@@ -16,4 +17,13 @@
 .flag {
     max-width: 16px;
     max-width: 16px;
+}
+
+.mine {
+    max-width: 16px;
+    max-width: 16px;
+}
+
+.tile--revealed {
+    background: var(--c-beige-100);
 }

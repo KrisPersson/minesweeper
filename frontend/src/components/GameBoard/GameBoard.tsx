@@ -1,14 +1,18 @@
 import "./GameBoard.css";
-import { createNewMatrix } from "../../gamelogic/utils";
 import Tile from "../Tile/Tile";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { update } from "../../store/gameSlice";
+import { RootState } from "../../store/store";
 
 type GameBoardProps = {
   size: number;
 };
 
 export default function GameBoard({ size }: GameBoardProps) {
-  const [matrix, setMatrix] = useState(createNewMatrix(size));
+  const dispatch = useDispatch();
+  const matrix = useSelector((state: RootState) => state.game.matrix);
 
   function handleClick(event: SyntheticEvent, index: number) {
     const updated = matrix.map((tile, i) => {
@@ -24,8 +28,8 @@ export default function GameBoard({ size }: GameBoardProps) {
         }
       }
     });
-    setMatrix(updated);
-    return false;
+
+    dispatch(update(updated));
   }
 
   const tiles = matrix.map((tile) => {

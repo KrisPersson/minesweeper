@@ -11,10 +11,14 @@
   --c-grey-700: rgba(76, 76, 76, 1);
   --c-grey-900: rgba(37, 37, 37, 1);
 
+  --c-yellow-900: rgb(134, 114, 15);
   --c-yellow-700: rgb(200, 169, 17);
   --c-yellow-500: rgb(216, 184, 23);
   --c-yellow-300: rgb(230, 204, 75);
   --c-yellow-100: rgb(239, 219, 120);
+
+  --c-beige-100: rgb(213 199 127);
+
 
   --c-red-500: rgb(202, 31, 31);
   --c-red-700: rgb(144, 24, 24);
@@ -25,8 +29,9 @@
   
  
   --c-blue-300: rgb(189,206,251);
-
   --c-blue-500: rgb(37, 40, 199);
+
+  --c-purple-500: rgb(113, 37, 199);
 
  --c-background-main: var(--c-grey-900);
  --c-text-main: var(--c-white);
