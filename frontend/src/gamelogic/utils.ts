@@ -11,7 +11,6 @@ export function createNewMatrix(size: number) {
   const matrixLength = size * size;
   const numMines = Math.floor((size * size) / 6.5);
   const mineLocationsIndexes: number[] = [];
-  const mineMap = [];
 
   for (let i = 0; i < numMines; i++) {
     let randomIndex = null;
@@ -94,4 +93,77 @@ function countAdjacentMines(
   }
 
   return counter;
+}
+
+export function collectAdjacentEmpty(
+  curX: number,
+  curY: number,
+  curIndex: number,
+  size: number,
+  matrix: Ttile[]
+) {
+  const indexesAlreadyChecked = [curIndex];
+  const tileQueueToBeSearched: TadjacentObj[] = [
+    { x: curX, y: curY, index: curIndex },
+  ];
+  const checkedAndCollectedIndexes: number[] = [];
+
+  while (tileQueueToBeSearched.length > 0) {
+    const { x, y, index } = tileQueueToBeSearched[0];
+    const searchRound = findAdjacentEmpty(x, y, index, size, matrix);
+    searchRound.toBeRevealed.forEach((tile) => {
+      if (!checkedAndCollectedIndexes.includes(tile.index)) {
+        tileQueueToBeSearched.push(tile);
+        checkedAndCollectedIndexes.push(tile.index);
+      }
+    });
+    searchRound.hasBeenChecked.forEach((index) => {
+      if (!indexesAlreadyChecked.includes(index)) {
+        indexesAlreadyChecked.push(index);
+      }
+    });
+    tileQueueToBeSearched.shift();
+  }
+  return checkedAndCollectedIndexes;
+}
+
+function findAdjacentEmpty(
+  curX: number,
+  curY: number,
+  curIndex: number,
+  size: number,
+  matrix: Ttile[]
+) {
+  const adjacentsPositions: { [key: string]: TadjacentObj } = {
+    topLeft: { x: curX - 1, y: curY - 1, index: curIndex - (size + 1) },
+    top: { x: curX, y: curY - 1, index: curIndex - size },
+    topRight: { x: curX + 1, y: curY - 1, index: curIndex - (size - 1) },
+    left: { x: curX - 1, y: curY, index: curIndex - 1 },
+    right: { x: curX + 1, y: curY, index: curIndex + 1 },
+    bottomLeft: { x: curX - 1, y: curY + 1, index: curIndex + (size - 1) },
+    bottom: { x: curX, y: curY + 1, index: curIndex + size },
+    bottomRight: {
+      x: curX + 1,
+      y: curY + 1,
+      index: curIndex + (size + 1),
+    },
+  };
+
+  const collectedEmptysIndexesToBeRevealed: TadjacentObj[] = [];
+  const hasBeenChecked: number[] = [];
+
+  for (const tile in adjacentsPositions) {
+    const { x, y, index } = adjacentsPositions[tile];
+    if (
+      matrix[index] &&
+      matrix[index].x === x &&
+      matrix[index].y === y &&
+      matrix[index].content === 0
+    ) {
+      collectedEmptysIndexesToBeRevealed.push(adjacentsPositions[tile]);
+    }
+    hasBeenChecked.push(index);
+  }
+
+  return { toBeRevealed: collectedEmptysIndexesToBeRevealed, hasBeenChecked };
 }

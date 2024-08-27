@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { update } from "../../store/gameSlice";
 import { RootState } from "../../store/store";
+import { collectAdjacentEmpty } from "../../gamelogic/utils";
+import { Ttile } from "../../types";
 
 type GameBoardProps = {
   size: number;
@@ -15,21 +17,45 @@ export default function GameBoard({ size }: GameBoardProps) {
   const matrix = useSelector((state: RootState) => state.game.matrix);
 
   function handleClick(event: SyntheticEvent, index: number) {
-    const updated = matrix.map((tile, i) => {
+    let adjacentEmptyIndexes: number[] = [];
+    const searched = matrix.map((tile, i) => {
       if (i !== index) {
         return tile;
       } else {
         if (event.type === "click") {
-          return { ...tile, revealed: true, flagged: false };
+          if (tile.content !== 0) {
+            return { ...tile, revealed: true, flagged: false };
+          } else {
+            const { x, y, index } = tile;
+            adjacentEmptyIndexes = collectAdjacentEmpty(
+              x,
+              y,
+              index,
+              size,
+              matrix
+            );
+            return { ...tile, revealed: true, flagged: false };
+          }
         } else if (event.type === "contextmenu" && !tile.revealed) {
-          return { ...tile, flagged: !tile.flagged };
+          return { ...tile, flagged: !tile.flagged } as Ttile;
         } else {
-          return tile;
+          return tile as Ttile;
         }
       }
     });
+    if (adjacentEmptyIndexes.length > 0) {
+      const updated = searched.map((tile) => {
+        if (!adjacentEmptyIndexes.includes(tile.index)) {
+          return tile;
+        } else {
+          return { ...tile, revealed: true, flagged: false };
+        }
+      });
+      dispatch(update(updated));
+      return;
+    }
 
-    dispatch(update(updated));
+    dispatch(update(searched));
   }
 
   const tiles = matrix.map((tile) => {
