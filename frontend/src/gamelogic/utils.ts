@@ -102,7 +102,7 @@ export function collectAdjacentEmpty(
   size: number,
   matrix: Ttile[]
 ) {
-  const indexesAlreadyChecked = [curIndex];
+  const indexesAlreadyChecked: number[] = [];
   const tileQueueToBeSearched: TadjacentObj[] = [
     { x: curX, y: curY, index: curIndex },
   ];
@@ -124,7 +124,7 @@ export function collectAdjacentEmpty(
     });
     tileQueueToBeSearched.shift();
   }
-  return checkedAndCollectedIndexes;
+  return indexesAlreadyChecked;
 }
 
 function findAdjacentEmpty(
@@ -154,15 +154,12 @@ function findAdjacentEmpty(
 
   for (const tile in adjacentsPositions) {
     const { x, y, index } = adjacentsPositions[tile];
-    if (
-      matrix[index] &&
-      matrix[index].x === x &&
-      matrix[index].y === y &&
-      matrix[index].content === 0
-    ) {
-      collectedEmptysIndexesToBeRevealed.push(adjacentsPositions[tile]);
+    if (matrix[index] && matrix[index].x === x && matrix[index].y === y) {
+      hasBeenChecked.push(index);
+      if (matrix[index].content === 0) {
+        collectedEmptysIndexesToBeRevealed.push(adjacentsPositions[tile]);
+      }
     }
-    hasBeenChecked.push(index);
   }
 
   return { toBeRevealed: collectedEmptysIndexesToBeRevealed, hasBeenChecked };
