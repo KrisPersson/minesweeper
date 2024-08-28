@@ -4,7 +4,13 @@
     background: var( --c-background-game-window);
     display: flex;
     flex-direction: column;
+    padding: 32px;
+}
 
+@media (min-width: 1000px) {
+    .wrapper_window {
+        padding: 64px;
+    }
 }
 
 .gamewindow__header {
@@ -20,6 +26,11 @@
 .stat_text {
     color: var(--c-text-darker);
     font-size: 1.5rem;
+    min-width: 10ch;
+}
+
+.stat_text + .stat_text {
+    text-align: right;
 }
 
 .game-window__main {
@@ -39,4 +50,10 @@
 
 .timer {
     font-size: 1rem;
+    text-align: right;
+}
+
+.you-won-text {
+    color: var(--c-green-500);
+    text-align: center;
 }

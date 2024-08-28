@@ -54,6 +54,12 @@
 
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 html {
   background: var(--c-background-main);
 }
