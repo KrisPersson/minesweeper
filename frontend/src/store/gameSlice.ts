@@ -3,7 +3,7 @@ import { createNewMatrix } from "../gamelogic/utils";
 
 const initialState = {
   matrix: createNewMatrix(10),
-  // Add other state properties here
+  timerIsRunning: false,
 };
 
 const gameSlice = createSlice({
@@ -12,17 +12,18 @@ const gameSlice = createSlice({
   reducers: {
     resetGame: (state) => {
       state.matrix = createNewMatrix(10);
-      // Reset other state properties as needed
+      state.timerIsRunning = false;
     },
     update: (state, action) => {
       state.matrix = action.payload;
     },
-    // Add more actions as needed
+    setTimerIsRunning: (state, action) => {
+      state.timerIsRunning = action.payload;
+    },
   },
 });
 
-// Export the actions
-export const { resetGame, update } = gameSlice.actions;
+export const { resetGame, update, setTimerIsRunning } = gameSlice.actions;
 
 // Export the reducer
 export default gameSlice.reducer;

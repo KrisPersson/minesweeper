@@ -10,13 +10,20 @@ import { Ttile } from "../../types";
 
 type GameBoardProps = {
   size: number;
+  stopTimer: () => void;
 };
 
-export default function GameBoard({ size }: GameBoardProps) {
+export default function GameBoard({ size, stopTimer }: GameBoardProps) {
   const dispatch = useDispatch();
   const matrix = useSelector((state: RootState) => state.game.matrix);
+  const timerIsRunning = useSelector(
+    (state: RootState) => state.game.timerIsRunning
+  );
 
   function handleClick(event: SyntheticEvent, index: number) {
+    if (!timerIsRunning) {
+      return;
+    }
     let adjacentEmptyIndexes: number[] = [];
     const searched = matrix.map((tile, i) => {
       if (i !== index) {
@@ -24,7 +31,12 @@ export default function GameBoard({ size }: GameBoardProps) {
       } else {
         if (event.type === "click") {
           if (tile.content !== 0) {
-            return { ...tile, revealed: true, flagged: false };
+            if (tile.content !== -1) {
+              return { ...tile, revealed: true, flagged: false };
+            } else {
+              stopTimer();
+              return { ...tile, revealed: true, flagged: false };
+            }
           } else {
             const { x, y, index } = tile;
             adjacentEmptyIndexes = collectAdjacentEmpty(
