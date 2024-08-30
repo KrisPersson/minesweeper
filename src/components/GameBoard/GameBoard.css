@@ -1,0 +1,7 @@
+
+.gameboard {
+    color: currentColor;
+    display: grid;
+    align-self: center;
+    background: var(--c-green-700);
+}
