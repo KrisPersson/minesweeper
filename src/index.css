@@ -78,7 +78,7 @@ body > #root {
 }
 
 #root > .gamewindow {
-  grid-column: 2 / span 6;
+  grid-column: 4 / span 6;
 }
 
 p, h1, h2, h3, h4 {
